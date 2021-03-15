@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
+import 'package:nusocial/screens/components/eventsappbar.dart';
+
+import '../eventlist.dart';
 
 class Body extends StatelessWidget {
+  void navigateTo(String category, BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => EventList(of: category)));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -15,12 +23,51 @@ class Body extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Subtitle(text: 'Categories')),
           ),
-          SingleCategory(text: 'Academics', icon: Icons.book_outlined),
-          SingleCategory(text: 'Sports', icon: Icons.sports_baseball_outlined),
-          SingleCategory(text: 'Gaming', icon: Icons.sports_esports_outlined),
-          SingleCategory(text: 'Hackhatons', icon: Icons.computer_outlined),
-          SingleCategory(text: 'Others', icon: Icons.add_circle_outline),
-          SingleCategory(text: 'Activity', icon: Icons.ac_unit),
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EventsAppBar(of: "Academics")));
+              },
+              child:
+                  SingleCategory(text: 'Academics', icon: Icons.book_outlined)),
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EventsAppBar(of: "Activities")));
+              },
+              child: SingleCategory(
+                  text: 'Activities', icon: Icons.sports_baseball_outlined)),
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EventsAppBar(of: "Gaming")));
+              },
+              child: SingleCategory(
+                  text: 'Gaming', icon: Icons.sports_esports_outlined)),
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EventsAppBar(of: "Hackathon")));
+              },
+              child: SingleCategory(
+                  text: 'Hackhatons', icon: Icons.computer_outlined)),
+          InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EventsAppBar(of: "Other")));
+              },
+              child: SingleCategory(
+                  text: 'Others', icon: Icons.add_circle_outline)),
         ],
       ),
     );
@@ -88,7 +135,8 @@ class Subtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: kDefaultPadding - 5, top: kDefaultPadding - 5),
+        margin: EdgeInsets.only(
+            bottom: kDefaultPadding - 5, top: kDefaultPadding - 5),
         height: 24,
         child: Stack(
           children: [
@@ -118,4 +166,3 @@ class Subtitle extends StatelessWidget {
         ));
   }
 }
-

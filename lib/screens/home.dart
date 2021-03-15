@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
+import 'package:nusocial/models/academicevent.dart';
+import 'package:nusocial/models/activityevent.dart';
+import 'package:nusocial/models/gamingevent.dart';
+import 'package:nusocial/models/hackathonevent.dart';
+import 'package:nusocial/models/otherevent.dart';
 import 'package:nusocial/screens/components/body.dart';
+import 'package:nusocial/services/database.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
