@@ -5,7 +5,11 @@ import 'package:nusocial/models/gamingevent.dart';
 import 'package:nusocial/models/hackathonevent.dart';
 import 'package:nusocial/models/localuser.dart';
 import 'package:nusocial/models/otherevent.dart';
+import 'package:nusocial/models/parentevent.dart';
+import 'package:nusocial/models/participant.dart';
 import 'package:nusocial/models/user.dart';
+import 'package:nusocial/screens/components/participantlist.dart';
+import 'package:nusocial/screens/request_details.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -34,9 +38,36 @@ class DatabaseService {
       .document("Others")
       .collection("events");
   CollectionReference userCollection = Firestore.instance.collection('users');
+  Query eventCollection = Firestore.instance.collectionGroup('events');
 
   LocalUser _localUserFromDocumentSnapshot(DocumentSnapshot snapshot) {
     return LocalUser(uid, snapshot.data['name'], snapshot.data['year'], snapshot.data['major']);
+  }
+
+  List<Participant> _participantListFromQuerySnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Participant(name: doc['name']);
+    }).toList();
+  }
+
+  AcademicEvent _academicEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
+    return AcademicEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
+  }
+
+  ActivityEvent _activityEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
+    return ActivityEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
+  }
+
+  GamingEvent _gamingEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
+    return GamingEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
+  }
+
+  HackathonEvent _hackathonEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
+    return HackathonEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
+  }
+
+  OtherEvent _otherEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
+    return OtherEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
   }
 
   List<AcademicEvent> _academicEventListFromQuerySnapshot(
@@ -111,6 +142,27 @@ class DatabaseService {
     return userCollection.document(uid).snapshots().map(_localUserFromDocumentSnapshot);
   }
 
+  Stream<List<Participant>> get participants {
+    return userCollection.where('events', arrayContains: uid).snapshots().map(_participantListFromQuerySnapshot);
+  }
+
+  Stream<AcademicEvent> getChosenAcademicEvent(String eventId) {
+    print(eventId);
+    return academicevents.document(eventId).snapshots().map(_academicEventFromDocumentSnapshot);
+  }
+  Stream<ActivityEvent> getChosenActivityEvent(String eventId) {
+    return activityevents.document(eventId).snapshots().map(_activityEventFromDocumentSnapshot);
+  }
+  Stream<GamingEvent> getChosenGamingEvent(String eventId) {
+    return gamingevents.document(eventId).snapshots().map(_gamingEventFromDocumentSnapshot);
+  }
+  Stream<HackathonEvent> getChosenHackathonEvent(String eventId) {
+    return hackathonevents.document(eventId).snapshots().map(_hackathonEventFromDocumentSnapshot);
+  }
+  Stream<OtherEvent> getChosenOtherEvent(String eventId) {
+    return otherevents.document(eventId).snapshots().map(_otherEventFromDocumentSnapshot);
+  }
+
   Stream<List<AcademicEvent>> get academicEvents {
     return academicevents.snapshots().map(_academicEventListFromQuerySnapshot);
   }
@@ -152,13 +204,28 @@ class DatabaseService {
   }
 
   Future updateUser(User newUser) async {
-    var eventUid = Uuid().v4();
     return await Firestore.instance.collection('users')
         .document(newUser.uid)
         .setData({
       'name' : newUser.name,
       'year' : newUser.year,
       'major' : newUser.major,
+      'events' : []
     });
+  }
+
+  Future joinEvent(String eventId) async {
+    return await userCollection.document(uid).updateData({
+      'events': FieldValue.arrayUnion([eventId])
+    });
+  }
+
+  Future addOneToRegister(String category, String eventId) async {
+    return await Firestore.instance
+      .collection('categories')
+      .document(category)
+      .collection("events").document(eventId).updateData({
+        'registered' : FieldValue.increment(1)
+      });
   }
 }

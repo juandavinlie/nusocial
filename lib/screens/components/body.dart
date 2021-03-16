@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
+import 'package:nusocial/models/user.dart';
 import 'package:nusocial/screens/components/eventsappbar.dart';
+import 'package:nusocial/services/auth.dart';
+import 'package:provider/provider.dart';
 
 import '../eventlist.dart';
 
@@ -12,6 +15,9 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<User>(context);
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -26,7 +32,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EventsAppBar(of: "Academics")));
+                        builder: (context) => EventsAppBar(of: "Academics", useruid: user.uid)));
               },
               child:
                   SingleCategory(text: 'Academics', icon: Icons.book_outlined)),
