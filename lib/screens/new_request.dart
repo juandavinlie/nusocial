@@ -106,7 +106,7 @@ class _NewRequestState extends State<NewRequest> {
                     onPressed: () async {
                       int millisecondsSinceEpoch = DateTime(pickedDate.year, pickedDate.month, pickedDate.day, time.hour, time.minute).millisecondsSinceEpoch;
                       await DatabaseService().updateRequest(dropdownValue, eventName, millisecondsSinceEpoch, eventDescription, 10);
-                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/');
                     },
                   ))
             ],

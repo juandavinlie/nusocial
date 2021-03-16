@@ -16,7 +16,7 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: kDefaultPadding),
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: Subtitle(text: 'Categories')),
@@ -53,10 +53,10 @@ class Body extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EventsAppBar(of: "Hackathon")));
+                        builder: (context) => EventsAppBar(of: "Hackathons")));
               },
               child: SingleCategory(
-                  text: 'Hackhatons', icon: Icons.computer_outlined)),
+                  text: 'Hackathons', icon: Icons.computer_outlined)),
           InkWell(
               onTap: () {
                 Navigator.push(
@@ -89,16 +89,17 @@ class SingleCategory extends StatelessWidget {
           const EdgeInsets.only(left: kDefaultPadding, right: kDefaultPadding),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 0,
-                offset: Offset(2, 2),
-                blurRadius: 2,
-                color: Colors.blue.withOpacity(0.13),
-              )
-            ]),
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              spreadRadius: 0,
+              offset: Offset(2, 2),
+              blurRadius: 2,
+              color: Colors.blue.withOpacity(0.13),
+            )
+          ],
+        ),
         margin: EdgeInsets.only(bottom: kDefaultPadding - 5),
         height: 80,
         child: Center(

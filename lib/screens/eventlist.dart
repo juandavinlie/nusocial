@@ -52,7 +52,7 @@ class _EventListState extends State<EventList> {
             return EventCard(event: gamingEvents[index]);
           });
         break;
-      case "Hackathon":
+      case "Hackathons":
         return ListView.builder(
           itemCount: hackathonEvents.length, 
           itemBuilder: (context, index) {
