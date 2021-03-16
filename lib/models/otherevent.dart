@@ -4,7 +4,7 @@ import 'package:nusocial/models/parentevent.dart';
 class OtherEvent extends ParentEvent {
   String otherCategory;
 
-  OtherEvent(String otherCategory, String eventId, String eventName, Timestamp time, String eventDescription, int registered, int maximum) :
+  OtherEvent(String otherCategory, String eventId, String eventName, DateTime time, String eventDescription, int registered, int maximum) :
     this.otherCategory = otherCategory,
-    super(eventId, eventName, time, eventDescription, registered, maximum);
+    super(otherCategory, eventId, eventName, time, eventDescription, registered, maximum);
 }

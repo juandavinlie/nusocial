@@ -5,7 +5,7 @@ class AcademicEvent extends ParentEvent {
 
   String academicCategory;
 
-  AcademicEvent(String academicCategory, String eventId, String eventName, Timestamp time, String eventDescription, int registered, int maximum) :
+  AcademicEvent(String academicCategory, String eventId, String eventName, DateTime time, String eventDescription, int registered, int maximum) :
     this.academicCategory = academicCategory,
-    super(eventId, eventName, time, eventDescription, registered, maximum);
+    super(academicCategory, eventId, eventName, time, eventDescription, registered, maximum);
 }

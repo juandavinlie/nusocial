@@ -7,6 +7,7 @@ import 'package:nusocial/models/otherevent.dart';
 import 'package:provider/provider.dart';
 
 import 'components/body.dart';
+import 'components/eventcard.dart';
 
 class EventList extends StatefulWidget {
 
@@ -34,7 +35,7 @@ class _EventListState extends State<EventList> {
         return ListView.builder(
           itemCount: academicEvents.length, 
           itemBuilder: (context, index) {
-            return SingleCategory(text: academicEvents[index].eventName, icon: Icons.person);
+            return EventCard(event: academicEvents[index]);
           });
         break;
       case "Activities":
