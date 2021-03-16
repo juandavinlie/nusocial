@@ -26,7 +26,11 @@ class _NewRequestState extends State<NewRequest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        child: AppBarWithoutSearch(autoImplyLeading: true),
+        child: AppBarWithoutSearch(
+          autoImplyLeading: true,
+          text1: 'NUS',
+          text2: 'ocial',
+        ),
         preferredSize: Size.fromHeight(kToolbarHeight),
       ),
       body: Padding(
@@ -104,8 +108,19 @@ class _NewRequestState extends State<NewRequest> {
                     autofocus: false,
                     child: Text('Request'),
                     onPressed: () async {
-                      int millisecondsSinceEpoch = DateTime(pickedDate.year, pickedDate.month, pickedDate.day, time.hour, time.minute).millisecondsSinceEpoch;
-                      await DatabaseService().updateRequest(dropdownValue, eventName, millisecondsSinceEpoch, eventDescription, 10);
+                      int millisecondsSinceEpoch = DateTime(
+                              pickedDate.year,
+                              pickedDate.month,
+                              pickedDate.day,
+                              time.hour,
+                              time.minute)
+                          .millisecondsSinceEpoch;
+                      await DatabaseService().updateRequest(
+                          dropdownValue,
+                          eventName,
+                          millisecondsSinceEpoch,
+                          eventDescription,
+                          10);
                       Navigator.pushReplacementNamed(context, '/');
                     },
                   ))
@@ -118,67 +133,66 @@ class _NewRequestState extends State<NewRequest> {
 
   Container buildActivityDescription() {
     return Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      'Event Description',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  TextField(
-                    maxLines: 11,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10))),
-                      hintText: "Please write the event description.",
-                    ),
-                    autofocus: false,
-                    onChanged: (val) {
-                      eventDescription = val;
-                    },
-                  ),
-                ],
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 15),
+            child: Text(
+              'Event Description',
+              style: TextStyle(
+                fontSize: 20,
               ),
-            );
+            ),
+          ),
+          TextField(
+            maxLines: 11,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              hintText: "Please write the event description.",
+            ),
+            autofocus: false,
+            onChanged: (val) {
+              eventDescription = val;
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Container buildActivityName() {
     return Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                    child: Text(
-                      'Event Name',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Event Name",
-                      hintStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                      fillColor: Colors.white,
-                    ),
-                    onChanged: (val) {
-                      eventName = val;
-                    },
-                  ),
-                ],
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+            child: Text(
+              'Event Name',
+              style: TextStyle(
+                fontSize: 20,
               ),
-            );
+            ),
+          ),
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: "Event Name",
+              hintStyle: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+              ),
+              fillColor: Colors.white,
+            ),
+            onChanged: (val) {
+              eventName = val;
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Container buildCategoryType() {
@@ -201,8 +215,14 @@ class _NewRequestState extends State<NewRequest> {
             child: DropdownButton(
               value: dropdownValue,
               icon: Icon(Icons.arrow_downward),
-              items: <String>['Select', 'Academics', 'Activities', 'Gaming', 'Hackathons', 'Others']
-                  .map<DropdownMenuItem<String>>((String value) {
+              items: <String>[
+                'Select',
+                'Academics',
+                'Activities',
+                'Gaming',
+                'Hackathons',
+                'Others'
+              ].map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/screens/home.dart';
 import 'package:nusocial/screens/messages.dart';
+import 'package:nusocial/screens/request_details.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.grey[100],
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomeScreen(),
         '/messages': (context) => MessagesScreen(),
+        '/details': (context) => RequestDetails(),
       },
     );
   }

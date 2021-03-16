@@ -16,6 +16,8 @@ class _MessagesScreenState extends State<MessagesScreen> {
       appBar: PreferredSize(
         child: AppBarWithoutSearch(
           autoImplyLeading: false,
+          text1: 'NUS',
+          text2: 'ocial',
         ),
         preferredSize: Size.fromHeight(kToolbarHeight),
       ),

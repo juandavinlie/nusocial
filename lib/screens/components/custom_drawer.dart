@@ -105,7 +105,13 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Settings'),
-            onTap: () {},
+            onTap: () {
+              if (ModalRoute.of(context).settings.name == '/details') {
+                Navigator.pop(context);
+              } else {
+                Navigator.pushReplacementNamed(context, '/details');
+              }
+            },
           ),
           ListTile(
             contentPadding: EdgeInsets.fromLTRB(15, 10, 15, 10),
