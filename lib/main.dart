@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/screens/home.dart';
+import 'package:nusocial/screens/messages.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.grey[100],
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -27,7 +29,11 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/messages': (context) => MessagesScreen(),
+      },
     );
   }
 }

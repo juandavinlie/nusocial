@@ -21,7 +21,7 @@ class DatabaseService {
       .collection("events");
   CollectionReference hackathonevents = Firestore.instance
       .collection('categories')
-      .document("Hackathon")
+      .document("Hackathons")
       .collection("events");
   CollectionReference gamingevents = Firestore.instance
       .collection('categories')

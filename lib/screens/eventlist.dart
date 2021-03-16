@@ -42,28 +42,28 @@ class _EventListState extends State<EventList> {
         return ListView.builder(
           itemCount: activityEvents.length, 
           itemBuilder: (context, index) {
-            return SingleCategory(text: activityEvents[index].eventName, icon: Icons.person);
+            return EventCard(event: activityEvents[index]);
           });
         break;
       case "Gaming":
         return ListView.builder(
           itemCount: gamingEvents.length, 
           itemBuilder: (context, index) {
-            return SingleCategory(text: gamingEvents[index].eventName, icon: Icons.person);
+            return EventCard(event: gamingEvents[index]);
           });
         break;
       case "Hackathon":
         return ListView.builder(
           itemCount: hackathonEvents.length, 
           itemBuilder: (context, index) {
-            return SingleCategory(text: hackathonEvents[index].eventName, icon: Icons.person);
+            return EventCard(event: hackathonEvents[index]);
           });
         break;
       case "Other":
         return ListView.builder(
           itemCount: otherEvents.length, 
           itemBuilder: (context, index) {
-            return SingleCategory(text: otherEvents[index].eventName, icon: Icons.person);
+            return EventCard(event: otherEvents[index]);
           });
         break;
       default:
