@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
 import 'package:nusocial/screens/components/eventsappbar.dart';
+import 'package:nusocial/services/auth.dart';
 
 import '../eventlist.dart';
 

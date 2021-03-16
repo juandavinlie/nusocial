@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/services/auth.dart';
 
 class SignIn extends StatefulWidget {
@@ -22,13 +23,21 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AppBarWithoutSearch(
+          autoImplyLeading: false,
+          text1: 'NUS',
+          text2: 'ocial',
+        ),
+      ),
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           children: [
             Expanded(
-              flex: 8,
+              flex: 10,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -39,67 +48,69 @@ class _SignInState extends State<SignIn> {
                     child: Center(
                         child: Form(
                       key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text('NUSocial',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          SizedBox(height: 20.0),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              hintText: "Username",
-                              hintStyle: TextStyle(
-                                  color: Colors.black.withOpacity(0.5)),
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text('Sign in to NUSocial',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            SizedBox(height: 20.0),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                hintText: "Username",
+                                hintStyle: TextStyle(
+                                    color: Colors.black.withOpacity(0.5)),
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                               ),
+                              validator: (val) =>
+                                  val.isEmpty ? "Enter your username" : null,
+                              onChanged: (val) {
+                                name = val;
+                              },
                             ),
-                            validator: (val) =>
-                                val.isEmpty ? "Enter your username" : null,
-                            onChanged: (val) {
-                              name = val;
-                            },
-                          ),
-                          SizedBox(height: 20.0),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              hintText: "Password",
-                              hintStyle: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
+                            SizedBox(height: 20.0),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                               ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
+                              validator: (val) => val.length < 6
+                                  ? "Enter a password of at least 6 characters long"
+                                  : null,
+                              obscureText: true,
+                              onChanged: (val) {
+                                password = val;
+                              },
                             ),
-                            validator: (val) => val.length < 6
-                                ? "Enter a password of at least 6 characters long"
-                                : null,
-                            obscureText: true,
-                            onChanged: (val) {
-                              password = val;
-                            },
-                          ),
-                          SizedBox(height: 20.0),
-                          ElevatedButton(
-                            child: Text("Sign In"),
-                            onPressed: () async {
-                              if (_formKey.currentState.validate()) {
-                                dynamic result =
-                                    await _auth.signInWithEmailAndPassword(
-                                        name + "@nusocial.com", password);
-                                if (result == null) {
-                                  setState(() {
-                                    error = "Your account doesn't exist";
-                                  });
+                            SizedBox(height: 20.0),
+                            ElevatedButton(
+                              child: Text("Sign In"),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  dynamic result =
+                                      await _auth.signInWithEmailAndPassword(
+                                          name + "@nusocial.com", password);
+                                  if (result == null) {
+                                    setState(() {
+                                      error = "Your account doesn't exist";
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                          ),
-                        ],
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ))),
               ),
@@ -112,7 +123,7 @@ class _SignInState extends State<SignIn> {
               endIndent: 20,
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(

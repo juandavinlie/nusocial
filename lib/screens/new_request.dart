@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nusocial/constants.dart';
 import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/services/database.dart';
@@ -14,6 +15,7 @@ class _NewRequestState extends State<NewRequest> {
   DateTime pickedDate;
   TimeOfDay time;
   String eventDescription;
+  double maxNoOfParticipants;
 
   @override
   void initState() {
@@ -71,9 +73,11 @@ class _NewRequestState extends State<NewRequest> {
                           );
 
                           if (date != null) {
-                            setState(() {
-                              pickedDate = date;
-                            });
+                            setState(
+                              () {
+                                pickedDate = date;
+                              },
+                            );
                           }
                         },
                       ),
@@ -97,6 +101,40 @@ class _NewRequestState extends State<NewRequest> {
                         },
                       ),
                     )
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Text(
+                        'Number of Participants',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 80,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Enter",
+                          hintStyle: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                          fillColor: Colors.white,
+                        ),
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        onChanged: (val) {
+                          maxNoOfParticipants = double.parse(val);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -133,7 +171,7 @@ class _NewRequestState extends State<NewRequest> {
 
   Container buildActivityDescription() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
