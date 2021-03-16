@@ -41,7 +41,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EventsAppBar(of: "Activities")));
+                        builder: (context) => EventsAppBar(of: "Activities", useruid: user.uid)));
               },
               child: SingleCategory(
                   text: 'Activities', icon: Icons.sports_baseball_outlined)),
@@ -50,7 +50,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EventsAppBar(of: "Gaming")));
+                        builder: (context) => EventsAppBar(of: "Gaming", useruid: user.uid)));
               },
               child: SingleCategory(
                   text: 'Gaming', icon: Icons.sports_esports_outlined)),
@@ -59,7 +59,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EventsAppBar(of: "Hackathons")));
+                        builder: (context) => EventsAppBar(of: "Hackathons", useruid: user.uid)));
               },
               child: SingleCategory(
                   text: 'Hackathons', icon: Icons.computer_outlined)),
@@ -68,7 +68,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EventsAppBar(of: "Other")));
+                        builder: (context) => EventsAppBar(of: "Other", useruid: user.uid)));
               },
               child: SingleCategory(
                   text: 'Others', icon: Icons.add_circle_outline)),

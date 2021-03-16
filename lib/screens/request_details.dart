@@ -20,7 +20,6 @@ class RequestDetails extends StatefulWidget {
 }
 
 class _RequestDetailsState extends State<RequestDetails> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +53,19 @@ class _RequestDetailsState extends State<RequestDetails> {
                       children: [
                         ElevatedButton(
                           child: Text('Join'),
-                          onPressed: () async {
-                            await DatabaseService(uid: widget.useruid)
-                                .joinEvent(widget.event.eventId);
-                            await DatabaseService().addOneToRegister(widget.event.category, widget.event.eventId);
-                            setState(() {
-                              widget.event.incrementRegistered();
-                            });
-                          },
+                          onPressed: widget.event.joined
+                              ? null
+                              : () async {
+                                  await DatabaseService(uid: widget.useruid)
+                                      .joinEvent(widget.event.eventId);
+                                  await DatabaseService().addOneToRegister(
+                                      widget.event.category,
+                                      widget.event.eventId);
+                                  setState(() {
+                                    widget.event.incrementRegistered();
+                                    widget.event.joined = true;
+                                  });
+                                },
                         ),
                         SizedBox(
                           height: 200.0,
@@ -170,7 +174,4 @@ class _RequestDetailsState extends State<RequestDetails> {
       ],
     );
   }
-
-  
-  
 }

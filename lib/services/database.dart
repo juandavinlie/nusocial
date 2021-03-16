@@ -215,6 +215,8 @@ class DatabaseService {
   }
 
   Future joinEvent(String eventId) async {
+    print(uid);
+    print(eventId);
     return await userCollection.document(uid).updateData({
       'events': FieldValue.arrayUnion([eventId])
     });

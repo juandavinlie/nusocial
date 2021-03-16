@@ -8,6 +8,7 @@ class ParentEvent {
   String eventDescription;
   int registered;
   int maximum;
+  bool joined = false;
 
   ParentEvent(String category, String eventId, String eventName, DateTime time, String eventDescription, int registered, int maximum, ) {
     this.category = category;

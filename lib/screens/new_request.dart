@@ -15,7 +15,7 @@ class _NewRequestState extends State<NewRequest> {
   DateTime pickedDate;
   TimeOfDay time;
   String eventDescription;
-  double maxNoOfParticipants;
+  int maxNoOfParticipants;
 
   @override
   void initState() {
@@ -112,7 +112,7 @@ class _NewRequestState extends State<NewRequest> {
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Text(
-                        'Number of Participants',
+                        'Max Number of Participants',
                         style: TextStyle(
                           fontSize: 20,
                         ),
@@ -131,7 +131,7 @@ class _NewRequestState extends State<NewRequest> {
                         ),
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         onChanged: (val) {
-                          maxNoOfParticipants = double.parse(val);
+                          maxNoOfParticipants = int.parse(val);
                         },
                       ),
                     ),
@@ -158,7 +158,7 @@ class _NewRequestState extends State<NewRequest> {
                           eventName,
                           millisecondsSinceEpoch,
                           eventDescription,
-                          10);
+                          maxNoOfParticipants);
                       Navigator.pushReplacementNamed(context, '/');
                     },
                   ))
