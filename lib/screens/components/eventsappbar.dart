@@ -14,7 +14,8 @@ import 'body.dart';
 
 class EventsAppBar extends StatefulWidget {
   String of;
-  EventsAppBar({this.of});
+  String useruid;
+  EventsAppBar({this.of, this.useruid});
 
   @override
   _EventsAppBarState createState() => _EventsAppBarState();
@@ -56,7 +57,7 @@ class _EventsAppBarState extends State<EventsAppBar> {
               child: StreamProvider<List<OtherEvent>>.value(
                 initialData: [],
                 value: DatabaseService().otherEvents,
-                child: EventList(of: widget.of),
+                child: EventList(of: widget.of, useruid: widget.useruid),
               ),
             ),
           ),

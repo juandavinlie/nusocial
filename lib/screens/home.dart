@@ -22,20 +22,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    return StreamProvider<LocalUser>.value(
-      initialData: null,
-      value: DatabaseService(uid: user.uid).localUser,
-      child: Scaffold(
+    return Scaffold(
         appBar: CustomAppBar(
           autoImplyLeading: false,
           text1: 'NUS',
           text2: 'ocial',
         ),
         endDrawer: CustomDrawer(),
-        body: Body(),
-      ),
-    );
+        body: Body());
   }
 }
 

@@ -16,11 +16,7 @@ class MessagesScreen extends StatefulWidget {
 class _MessagesScreenState extends State<MessagesScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    return StreamProvider<LocalUser>.value(
-      initialData: null,
-      value: DatabaseService(uid: user.uid).localUser,
-      child: Scaffold(
+    return  Scaffold(
         appBar: PreferredSize(
           child: AppBarWithoutSearch(
             autoImplyLeading: false,
@@ -91,7 +87,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
             ],
           ),
         ),
-      ),
+  
     );
   }
 }
