@@ -3,7 +3,9 @@ import 'package:nusocial/models/academicevent.dart';
 import 'package:nusocial/models/activityevent.dart';
 import 'package:nusocial/models/gamingevent.dart';
 import 'package:nusocial/models/hackathonevent.dart';
+import 'package:nusocial/models/localuser.dart';
 import 'package:nusocial/models/otherevent.dart';
+import 'package:nusocial/models/user.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseService {
@@ -31,6 +33,11 @@ class DatabaseService {
       .collection('categories')
       .document("Others")
       .collection("events");
+  CollectionReference userCollection = Firestore.instance.collection('users');
+
+  LocalUser _localUserFromDocumentSnapshot(DocumentSnapshot snapshot) {
+    return LocalUser(uid, snapshot.data['name'], snapshot.data['year'], snapshot.data['major']);
+  }
 
   List<AcademicEvent> _academicEventListFromQuerySnapshot(
       QuerySnapshot snapshot) {
@@ -100,6 +107,10 @@ class DatabaseService {
     }).toList();
   }
 
+  Stream<LocalUser> get localUser {
+    return userCollection.document(uid).snapshots().map(_localUserFromDocumentSnapshot);
+  }
+
   Stream<List<AcademicEvent>> get academicEvents {
     return academicevents.snapshots().map(_academicEventListFromQuerySnapshot);
   }
@@ -137,6 +148,17 @@ class DatabaseService {
       'eventDescription': eventDescription,
       'registered': 0,
       'maximum': maximum
+    });
+  }
+
+  Future updateUser(User newUser) async {
+    var eventUid = Uuid().v4();
+    return await Firestore.instance.collection('users')
+        .document(newUser.uid)
+        .setData({
+      'name' : newUser.name,
+      'year' : newUser.year,
+      'major' : newUser.major,
     });
   }
 }

@@ -4,6 +4,7 @@ import 'package:nusocial/models/activityevent.dart';
 import 'package:nusocial/models/gamingevent.dart';
 import 'package:nusocial/models/hackathonevent.dart';
 import 'package:nusocial/models/otherevent.dart';
+import 'package:nusocial/screens/loading.dart';
 import 'package:provider/provider.dart';
 
 import 'components/body.dart';
@@ -32,35 +33,35 @@ class _EventListState extends State<EventList> {
 
     switch (widget.of) {
       case "Academics":
-        return ListView.builder(
+        return academicEvents == null ? Loading() : ListView.builder(
           itemCount: academicEvents.length, 
           itemBuilder: (context, index) {
             return EventCard(event: academicEvents[index]);
           });
         break;
       case "Activities":
-        return ListView.builder(
+        return activityEvents == null ? Loading() : ListView.builder(
           itemCount: activityEvents.length, 
           itemBuilder: (context, index) {
             return EventCard(event: activityEvents[index]);
           });
         break;
       case "Gaming":
-        return ListView.builder(
+        return gamingEvents == null ? Loading() : ListView.builder(
           itemCount: gamingEvents.length, 
           itemBuilder: (context, index) {
             return EventCard(event: gamingEvents[index]);
           });
         break;
       case "Hackathons":
-        return ListView.builder(
+        return hackathonEvents == null ? Loading() : ListView.builder(
           itemCount: hackathonEvents.length, 
           itemBuilder: (context, index) {
             return EventCard(event: hackathonEvents[index]);
           });
         break;
       case "Other":
-        return ListView.builder(
+        return otherEvents == null ? Loading() : ListView.builder(
           itemCount: otherEvents.length, 
           itemBuilder: (context, index) {
             return EventCard(event: otherEvents[index]);

@@ -1,8 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:nusocial/models/localuser.dart';
 import 'package:nusocial/screens/home.dart';
+import 'package:nusocial/screens/loading.dart';
 import 'package:nusocial/screens/messages.dart';
 import 'package:nusocial/screens/new_request.dart';
+import 'package:nusocial/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -11,7 +15,10 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+
+    final localUser = Provider.of<LocalUser>(context);
+    final AuthService _auth = AuthService();
+    return localUser == null ? Loading() : Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -46,7 +53,7 @@ class CustomDrawer extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text('Louis Davin Lie'),
+                          Text(localUser.name),
                         ],
                       ),
                     ),
@@ -55,8 +62,8 @@ class CustomDrawer extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Year 1,'),
-                          Text('Computer Science'),
+                          Text('Year ' + localUser.year.toString()),
+                          Text(localUser.major),
                         ],
                       ),
                     ),
@@ -111,6 +118,13 @@ class CustomDrawer extends StatelessWidget {
               } else {
                 Navigator.pushReplacementNamed(context, '/details');
               }
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () {
+              _auth.signOut();
             },
           ),
           ListTile(
