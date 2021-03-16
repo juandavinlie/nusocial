@@ -4,11 +4,9 @@ import 'package:nusocial/constants.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: [
-          //HeaderWithSearchBox(size: size),
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Align(
@@ -40,7 +38,8 @@ class SingleCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding:
+          const EdgeInsets.only(left: kDefaultPadding, right: kDefaultPadding),
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -88,7 +87,8 @@ class Subtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: kDefaultPadding - 5, top: kDefaultPadding - 5),
+        margin: EdgeInsets.only(
+            bottom: kDefaultPadding - 5, top: kDefaultPadding - 5),
         height: 24,
         child: Stack(
           children: [
@@ -118,4 +118,3 @@ class Subtitle extends StatelessWidget {
         ));
   }
 }
-

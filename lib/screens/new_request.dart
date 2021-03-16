@@ -35,32 +35,7 @@ class _NewRequestState extends State<NewRequest> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildCategoryType(),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                      child: Text(
-                        'Activity Name',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Activity Name",
-                        hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        fillColor: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              buildActivityName(),
               Container(
                 margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: Column(
@@ -77,8 +52,9 @@ class _NewRequestState extends State<NewRequest> {
                     ),
                     Container(
                       child: ListTile(
+                        leading: Icon(Icons.calendar_today),
                         title: Text(
-                            "Date: ${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}"),
+                            "${pickedDate.day} - ${pickedDate.month} - ${pickedDate.year}"),
                         trailing: Icon(Icons.arrow_downward),
                         onTap: () async {
                           DateTime date = await showDatePicker(
@@ -98,7 +74,8 @@ class _NewRequestState extends State<NewRequest> {
                     ),
                     Container(
                       child: ListTile(
-                        title: Text("Time: ${time.hour}:${time.minute}"),
+                        leading: Icon(Icons.access_time_rounded),
+                        title: Text("${time.hour}:${time.minute}"),
                         trailing: Icon(Icons.arrow_downward),
                         onTap: () async {
                           TimeOfDay t = await showTimePicker(
@@ -117,30 +94,7 @@ class _NewRequestState extends State<NewRequest> {
                   ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        'Activity Description',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    TextField(
-                      maxLines: 11,
-                      decoration: InputDecoration(
-                        hintText: "Please write the activity description.",
-                        border: InputBorder.none,
-                      ),
-                      autofocus: false,
-                    ),
-                  ],
-                ),
-              ),
+              buildActivityDescription(),
               Align(
                   alignment: Alignment.center,
                   child: RaisedButton(
@@ -153,6 +107,65 @@ class _NewRequestState extends State<NewRequest> {
         ),
       ),
     );
+  }
+
+  Container buildActivityDescription() {
+    return Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: Text(
+                      'Activity Description',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    maxLines: 11,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10))),
+                      hintText: "Please write the activity description.",
+                    ),
+                    autofocus: false,
+                  ),
+                ],
+              ),
+            );
+  }
+
+  Container buildActivityName() {
+    return Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                    child: Text(
+                      'Activity Name',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Activity Name",
+                      hintStyle: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
   }
 
   Container buildCategoryType() {

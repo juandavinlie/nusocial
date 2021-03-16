@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
 import 'package:nusocial/screens/components/body.dart';
 import 'components/appbar_without_search.dart';
-import 'components/customer_drawer.dart';
+import 'components/custom_drawer.dart';
 import 'components/header_with_searchbox.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomAppBar(),
       endDrawer: CustomDrawer(),

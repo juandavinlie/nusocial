@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:nusocial/screens/home.dart';
+import 'package:nusocial/screens/messages.dart';
 import 'package:nusocial/screens/new_request.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -81,12 +83,24 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.home),
             title: Text('Home'),
-            onTap: () {},
+            onTap: () {
+              if (ModalRoute.of(context).settings.name == '/') {
+                Navigator.pop(context);
+              } else {
+                Navigator.pushReplacementNamed(context, '/');
+              }
+            },
           ),
           ListTile(
             leading: Icon(Icons.message),
             title: Text('Messages'),
-            onTap: () {},
+            onTap: () {
+              if (ModalRoute.of(context).settings.name == '/messages') {
+                Navigator.pop(context);
+              } else {
+                Navigator.pushReplacementNamed(context, '/messages');
+              }
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),
