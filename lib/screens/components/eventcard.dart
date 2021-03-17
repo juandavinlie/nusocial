@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nusocial/models/academicevent.dart';
 import 'package:nusocial/models/parentevent.dart';
-import 'package:nusocial/screens/loading.dart';
-import 'package:nusocial/screens/request_details.dart';
-import 'package:nusocial/services/auth.dart';
-import 'package:provider/provider.dart';
+import 'package:nusocial/screens/event_details.dart';
 
 import '../../constants.dart';
 
@@ -28,7 +24,7 @@ class _EventCardState extends State<EventCard> {
         Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RequestDetails(event: widget.event, useruid: widget.useruid)));
+                        builder: (context) => EventDetails(event: widget.event, useruid: widget.useruid)));
       },
           child: Container(
         margin: EdgeInsets.only(top: 5, bottom: 5),

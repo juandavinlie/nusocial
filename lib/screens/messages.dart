@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nusocial/models/localuser.dart';
-import 'package:nusocial/models/user.dart';
 import 'package:nusocial/screens/components/appbar_without_search.dart';
-import 'package:nusocial/screens/components/custom_drawer.dart';
-import 'package:nusocial/services/auth.dart';
-import 'package:nusocial/services/database.dart';
-import 'package:provider/provider.dart';
-
 import '../constants.dart';
 
 class MessagesScreen extends StatefulWidget {
@@ -47,7 +40,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     ),
                     Container(
                       child: Text(
-                        'Louis Davin Lie',
+                        'Louis',
                         style: TextStyle(
                           fontSize: 20,
                         ),
@@ -74,7 +67,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                     ),
                     Container(
                       child: Text(
-                        'Juan Davin Lie',
+                        'Juan',
                         style: TextStyle(
                           fontSize: 20,
                         ),

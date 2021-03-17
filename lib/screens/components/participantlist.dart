@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
 import 'package:nusocial/models/participant.dart';
-import 'package:nusocial/screens/components/body.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../request_details.dart';
 
 class ParticipantList extends StatefulWidget {
   @override

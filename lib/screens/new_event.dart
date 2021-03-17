@@ -5,15 +5,15 @@ import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/services/database.dart';
 import 'package:uuid/uuid.dart';
 
-class NewRequest extends StatefulWidget {
+class NewEvent extends StatefulWidget {
   String uid;
-  NewRequest({this.uid});
+  NewEvent({this.uid});
 
   @override
-  _NewRequestState createState() => _NewRequestState();
+  _NewEventState createState() => _NewEventState();
 }
 
-class _NewRequestState extends State<NewRequest> {
+class _NewEventState extends State<NewEvent> {
   String dropdownValue = 'Select';
   String eventName = "";
   DateTime pickedDate;
@@ -57,7 +57,7 @@ class _NewRequestState extends State<NewRequest> {
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
                       child: Text(
-                        'Time & Date',
+                        'Date & Time',
                         style: TextStyle(
                           fontSize: 20,
                         ),
@@ -171,7 +171,7 @@ class _NewRequestState extends State<NewRequest> {
                               time.minute)
                           .millisecondsSinceEpoch;
                       String eventId = Uuid().v4();
-                      await DatabaseService().updateRequest(
+                      await DatabaseService().updateEvent(
                           eventId,
                           dropdownValue,
                           eventName,

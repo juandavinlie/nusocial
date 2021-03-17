@@ -5,10 +5,7 @@ import 'package:nusocial/models/gamingevent.dart';
 import 'package:nusocial/models/hackathonevent.dart';
 import 'package:nusocial/models/otherevent.dart';
 import 'package:nusocial/screens/loading.dart';
-import 'package:nusocial/services/database.dart';
 import 'package:provider/provider.dart';
-
-import 'components/body.dart';
 import 'components/eventcard.dart';
 
 class EventList extends StatefulWidget {

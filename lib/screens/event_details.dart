@@ -4,22 +4,21 @@ import 'package:nusocial/models/parentevent.dart';
 import 'package:nusocial/models/participant.dart';
 import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/screens/components/body.dart';
-import 'package:nusocial/screens/components/custom_drawer.dart';
 import 'package:nusocial/screens/components/participantlist.dart';
 import 'package:nusocial/services/database.dart';
 import 'package:provider/provider.dart';
 
-class RequestDetails extends StatefulWidget {
+class EventDetails extends StatefulWidget {
   ParentEvent event;
   String useruid;
 
-  RequestDetails({this.event, this.useruid});
+  EventDetails({this.event, this.useruid});
 
   @override
-  _RequestDetailsState createState() => _RequestDetailsState();
+  _EventDetailsState createState() => _EventDetailsState();
 }
 
-class _RequestDetailsState extends State<RequestDetails> {
+class _EventDetailsState extends State<EventDetails> {
   @override
   Widget build(BuildContext context) {
     print(widget.event.adminId);

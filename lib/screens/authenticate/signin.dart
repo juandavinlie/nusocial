@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/services/auth.dart';
 
 class SignIn extends StatefulWidget {

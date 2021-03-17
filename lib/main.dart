@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nusocial/screens/authenticate/register.dart';
-import 'package:nusocial/screens/home.dart';
 import 'package:nusocial/screens/messages.dart';
-import 'package:nusocial/screens/request_details.dart';
 import 'package:nusocial/screens/wrapper.dart';
 import 'package:nusocial/services/auth.dart';
 import 'package:provider/provider.dart';

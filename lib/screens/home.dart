@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nusocial/constants.dart';
-import 'package:nusocial/models/academicevent.dart';
-import 'package:nusocial/models/activityevent.dart';
-import 'package:nusocial/models/gamingevent.dart';
-import 'package:nusocial/models/hackathonevent.dart';
-import 'package:nusocial/models/localuser.dart';
-import 'package:nusocial/models/otherevent.dart';
-import 'package:nusocial/models/user.dart';
 import 'package:nusocial/screens/components/body.dart';
-import 'package:nusocial/services/database.dart';
-import 'package:provider/provider.dart';
 import 'components/appbar_without_search.dart';
 import 'components/custom_drawer.dart';
 import 'components/header_with_searchbox.dart';

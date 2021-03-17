@@ -5,12 +5,8 @@ import 'package:nusocial/models/gamingevent.dart';
 import 'package:nusocial/models/hackathonevent.dart';
 import 'package:nusocial/models/localuser.dart';
 import 'package:nusocial/models/otherevent.dart';
-import 'package:nusocial/models/parentevent.dart';
 import 'package:nusocial/models/participant.dart';
 import 'package:nusocial/models/user.dart';
-import 'package:nusocial/screens/components/participantlist.dart';
-import 'package:nusocial/screens/request_details.dart';
-import 'package:uuid/uuid.dart';
 
 class DatabaseService {
   String uid;
@@ -202,7 +198,7 @@ class DatabaseService {
     return otherevents.snapshots().map(_otherEventListFromQuerySnapshot);
   }
 
-  Future updateRequest(String eventId, String category, String eventName, int time,
+  Future updateEvent(String eventId, String category, String eventName, int time,
       String eventDescription, int maximum, String adminId) async {
     return await Firestore.instance.collection('categories')
         .document(category)

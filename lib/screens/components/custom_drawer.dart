@@ -1,11 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nusocial/models/localuser.dart';
 import 'package:nusocial/models/user.dart';
-import 'package:nusocial/screens/home.dart';
 import 'package:nusocial/screens/loading.dart';
-import 'package:nusocial/screens/messages.dart';
-import 'package:nusocial/screens/new_request.dart';
+import 'package:nusocial/screens/new_event.dart';
 import 'package:nusocial/services/auth.dart';
 import 'package:nusocial/services/database.dart';
 import 'package:provider/provider.dart';
@@ -84,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => NewRequest(uid: user.uid)),
+                        builder: (context) => NewEvent(uid: user.uid)),
                   );
                 },
               ),
