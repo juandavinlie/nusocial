@@ -22,6 +22,8 @@ class RequestDetails extends StatefulWidget {
 class _RequestDetailsState extends State<RequestDetails> {
   @override
   Widget build(BuildContext context) {
+    print(widget.event.adminId);
+    print(widget.useruid);
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
@@ -40,10 +42,6 @@ class _RequestDetailsState extends State<RequestDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // buildProfileSection(),
-                  // Divider(
-                  //   thickness: 1,
-                  // ),
                   buildActivityDetails(),
                   Divider(
                     thickness: 1,
@@ -51,22 +49,36 @@ class _RequestDetailsState extends State<RequestDetails> {
                   Container(
                     child: Column(
                       children: [
-                        ElevatedButton(
-                          child: Text('Join'),
-                          onPressed: widget.event.joined
-                              ? null
-                              : () async {
-                                  await DatabaseService(uid: widget.useruid)
-                                      .joinEvent(widget.event.eventId);
-                                  await DatabaseService().addOneToRegister(
-                                      widget.event.category,
-                                      widget.event.eventId);
-                                  setState(() {
-                                    widget.event.incrementRegistered();
-                                    widget.event.joined = true;
-                                  });
-                                },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Subtitle(text: 'Participants'),
+                            ElevatedButton(
+                              child: Text('Join'),
+                              onPressed: widget.event.joined || widget.event.adminId == widget.useruid
+                                  ? null
+                                  : () async {
+                                      var events = await DatabaseService(uid: widget.useruid).getEvents();
+                                      if (!events.contains(widget.event.eventId)) {
+                                        await DatabaseService(uid: widget.useruid)
+                                            .joinEvent(widget.event.eventId);
+                                        await DatabaseService().addOneToRegister(
+                                            widget.event.category,
+                                            widget.event.eventId);
+                                        setState(() {
+                                          widget.event.incrementRegistered();
+                                          widget.event.joined = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                            widget.event.joined = true;
+                                          });
+                                        }
+                                    }
+                            ),
+                          ],
                         ),
+                        
                         SizedBox(
                           height: 200.0,
                           child: ParticipantList(),

@@ -3,6 +3,7 @@ import 'package:nusocial/constants.dart';
 import 'package:nusocial/models/participant.dart';
 import 'package:nusocial/screens/components/body.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../request_details.dart';
 
@@ -19,7 +20,7 @@ class _ParticipantListState extends State<ParticipantList> {
     return ListView.builder(
         itemCount: participants.length,
         itemBuilder: (context, index) {
-          return ParticipantCard(fullName: participants[index].name);
+          return ParticipantCard(participant: participants[index]);
         });
   }
 }
@@ -27,31 +28,49 @@ class _ParticipantListState extends State<ParticipantList> {
 class ParticipantCard extends StatelessWidget {
   const ParticipantCard({
     Key key,
-    this.fullName,
+    this.participant,
   }) : super(key: key);
 
-  final String fullName;
+  final Participant participant;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 5, bottom: 5),
-      child: Row(
+      child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: kDefaultPadding),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/anon.jpg'),
-            ),
-          ),
-          Container(
-            child: Text(
-              fullName,
-              style: TextStyle(
-                fontSize: 15,
+          Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: kDefaultPadding),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/anon.jpg'),
+                ),
               ),
-            ),
-          )
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      participant.name,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: InkWell(
+                      child: Text(
+                        '@' + participant.telegram,
+                        style: TextStyle(color: Colors.blue[700]),
+                      ),
+                      onTap: () => launch('https://t.me/' + participant.telegram),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ],
       ),
     );

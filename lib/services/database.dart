@@ -41,16 +41,16 @@ class DatabaseService {
   Query eventCollection = Firestore.instance.collectionGroup('events');
 
   LocalUser _localUserFromDocumentSnapshot(DocumentSnapshot snapshot) {
-    return LocalUser(uid, snapshot.data['name'], snapshot.data['year'], snapshot.data['major']);
+    return LocalUser(uid, snapshot.data['name'], snapshot.data['year'], snapshot.data['major'], snapshot.data['telegramHandle']);
   }
 
   List<Participant> _participantListFromQuerySnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return Participant(name: doc['name']);
+      return Participant(name: doc['name'], telegram: doc['telegramHandle']);
     }).toList();
   }
 
-  AcademicEvent _academicEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
+  /*AcademicEvent _academicEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
     return AcademicEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
   }
 
@@ -68,7 +68,7 @@ class DatabaseService {
 
   OtherEvent _otherEventFromDocumentSnapshot(DocumentSnapshot snapshot) {
     return OtherEvent(snapshot.data['category'], snapshot.data['eventId'], snapshot.data['eventName'], snapshot.data['time'], snapshot.data['eventDescription'], snapshot.data['registered'], snapshot.data['maximum']);
-  }
+  }*/
 
   List<AcademicEvent> _academicEventListFromQuerySnapshot(
       QuerySnapshot snapshot) {
@@ -80,7 +80,9 @@ class DatabaseService {
           DateTime.fromMillisecondsSinceEpoch(doc['time']).toLocal(),
           doc['eventDescription'],
           doc['registered'],
-          doc['maximum']);
+          doc['maximum'],
+          doc['registered'] == doc['maximum'],
+          doc['adminId']);
     }).toList();
   }
 
@@ -94,7 +96,9 @@ class DatabaseService {
           DateTime.fromMillisecondsSinceEpoch(doc['time']).toLocal(),
           doc['eventDescription'],
           doc['registered'],
-          doc['maximum']);
+          doc['maximum'],
+          doc['registered'] == doc['maximum'],
+          doc['adminId']);
     }).toList();
   }
 
@@ -107,7 +111,9 @@ class DatabaseService {
           DateTime.fromMillisecondsSinceEpoch(doc['time']).toLocal(),
           doc['eventDescription'],
           doc['registered'],
-          doc['maximum']);
+          doc['maximum'],
+          doc['registered'] == doc['maximum'],
+          doc['adminId']);
     }).toList();
   }
 
@@ -121,7 +127,9 @@ class DatabaseService {
           DateTime.fromMillisecondsSinceEpoch(doc['time']).toLocal(),
           doc['eventDescription'],
           doc['registered'],
-          doc['maximum']);
+          doc['maximum'],
+          doc['registered'] == doc['maximum'],
+          doc['adminId']);
     }).toList();
   }
 
@@ -134,7 +142,9 @@ class DatabaseService {
           DateTime.fromMillisecondsSinceEpoch(doc['time']).toLocal(),
           doc['eventDescription'],
           doc['registered'],
-          doc['maximum']);
+          doc['maximum'],
+          doc['registered'] == doc['maximum'],
+          doc['adminId']);
     }).toList();
   }
 
@@ -146,7 +156,14 @@ class DatabaseService {
     return userCollection.where('events', arrayContains: uid).snapshots().map(_participantListFromQuerySnapshot);
   }
 
-  Stream<AcademicEvent> getChosenAcademicEvent(String eventId) {
+  // get events of a user
+  Future getEvents() {
+    return userCollection.document(uid).get().then((value) {
+      return value.data['events'];
+    });
+  }
+
+  /*Stream<AcademicEvent> getChosenAcademicEvent(String eventId) {
     print(eventId);
     return academicevents.document(eventId).snapshots().map(_academicEventFromDocumentSnapshot);
   }
@@ -161,7 +178,7 @@ class DatabaseService {
   }
   Stream<OtherEvent> getChosenOtherEvent(String eventId) {
     return otherevents.document(eventId).snapshots().map(_otherEventFromDocumentSnapshot);
-  }
+  }*/
 
   Stream<List<AcademicEvent>> get academicEvents {
     return academicevents.snapshots().map(_academicEventListFromQuerySnapshot);
@@ -185,38 +202,39 @@ class DatabaseService {
     return otherevents.snapshots().map(_otherEventListFromQuerySnapshot);
   }
 
-  Future updateRequest(String category, String eventName, int time,
-      String eventDescription, int maximum) async {
-    var eventUid = Uuid().v4();
+  Future updateRequest(String eventId, String category, String eventName, int time,
+      String eventDescription, int maximum, String adminId) async {
     return await Firestore.instance.collection('categories')
         .document(category)
         .collection('events')
-        .document(eventUid)
+        .document(eventId)
         .setData({
       'category': category,
-      'eventId': eventUid,
+      'eventId': eventId,
       'eventName': eventName,
       'time': time,
       'eventDescription': eventDescription,
       'registered': 0,
-      'maximum': maximum
+      'maximum': maximum,
+      'joined' : false,
+      'adminId' : adminId
     });
   }
 
   Future updateUser(User newUser) async {
+    print("got here");
     return await Firestore.instance.collection('users')
         .document(newUser.uid)
         .setData({
       'name' : newUser.name,
       'year' : newUser.year,
       'major' : newUser.major,
+      'telegramHandle' : newUser.telegram,
       'events' : []
     });
   }
 
   Future joinEvent(String eventId) async {
-    print(uid);
-    print(eventId);
     return await userCollection.document(uid).updateData({
       'events': FieldValue.arrayUnion([eventId])
     });

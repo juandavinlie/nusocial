@@ -3,19 +3,24 @@ import 'package:flutter/services.dart';
 import 'package:nusocial/constants.dart';
 import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/services/database.dart';
+import 'package:uuid/uuid.dart';
 
 class NewRequest extends StatefulWidget {
+  String uid;
+  NewRequest({this.uid});
+
   @override
   _NewRequestState createState() => _NewRequestState();
 }
 
 class _NewRequestState extends State<NewRequest> {
   String dropdownValue = 'Select';
-  String eventName;
+  String eventName = "";
   DateTime pickedDate;
   TimeOfDay time;
-  String eventDescription;
+  String eventDescription = "";
   int maxNoOfParticipants;
+  String error = "";
 
   @override
   void initState() {
@@ -129,7 +134,9 @@ class _NewRequestState extends State<NewRequest> {
                           ),
                           fillColor: Colors.white,
                         ),
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         onChanged: (val) {
                           maxNoOfParticipants = int.parse(val);
                         },
@@ -139,13 +146,23 @@ class _NewRequestState extends State<NewRequest> {
                 ),
               ),
               buildActivityDescription(),
+              Center(child: Container(child: Text(error, style: TextStyle(color: Colors.red),))),
               Align(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    clipBehavior: Clip.none,
-                    autofocus: false,
-                    child: Text('Request'),
-                    onPressed: () async {
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        side: BorderSide(color: Colors.transparent),
+                      ),
+                    ),
+                  ),
+                  clipBehavior: Clip.none,
+                  autofocus: false,
+                  child: Text('Create'),
+                  onPressed: () async {
+                    if (dropdownValue != 'Select' && eventName.length > 0 && eventDescription.length > 0 && maxNoOfParticipants > 1) {
                       int millisecondsSinceEpoch = DateTime(
                               pickedDate.year,
                               pickedDate.month,
@@ -153,15 +170,31 @@ class _NewRequestState extends State<NewRequest> {
                               time.hour,
                               time.minute)
                           .millisecondsSinceEpoch;
+                      String eventId = Uuid().v4();
                       await DatabaseService().updateRequest(
+                          eventId,
                           dropdownValue,
                           eventName,
                           millisecondsSinceEpoch,
                           eventDescription,
-                          maxNoOfParticipants);
+                          maxNoOfParticipants,
+                          widget.uid);
+                      print("User " + widget.uid);
+                      await DatabaseService(uid: widget.uid).joinEvent(eventId);
+                      await DatabaseService()
+                          .addOneToRegister(dropdownValue, eventId);
                       Navigator.pushReplacementNamed(context, '/');
-                    },
-                  ))
+                    } else {
+                      setState(() {
+                        error = "Fields cannot be empty and Max Number of Participants must be greater than 1";
+                      });
+                    }
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

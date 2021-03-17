@@ -23,21 +23,21 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AppBarWithoutSearch(
-          autoImplyLeading: false,
-          text1: 'NUS',
-          text2: 'ocial',
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(kToolbarHeight),
+      //   child: AppBarWithoutSearch(
+      //     autoImplyLeading: false,
+      //     text1: 'NUS',
+      //     text2: 'ocial',
+      //   ),
+      // ),
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           children: [
             Expanded(
-              flex: 10,
+              flex: 8,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -52,11 +52,37 @@ class _SignInState extends State<SignIn> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text('Sign in to NUSocial',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'NUS',
+                                    style: TextStyle(
+                                      color: Colors.orange[400],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 40,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'ocial',
+                                    style: TextStyle(
+                                      color: Colors.grey[900],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 40,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Text(
+                            //   'Sign in to NUSocial',
+                            //   style: TextStyle(
+                            //     fontSize: 20,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
                             SizedBox(height: 20.0),
                             TextFormField(
                               decoration: InputDecoration(
@@ -95,6 +121,15 @@ class _SignInState extends State<SignIn> {
                             ),
                             SizedBox(height: 20.0),
                             ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    side: BorderSide(color: Colors.transparent),
+                                  ),
+                                ),
+                              ),
                               child: Text("Sign In"),
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
@@ -123,7 +158,7 @@ class _SignInState extends State<SignIn> {
               endIndent: 20,
             ),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(

@@ -2,5 +2,6 @@ import 'package:flutter/material.dart';
 
 class Participant {
   String name;
-  Participant({this.name});
+  String telegram;
+  Participant({this.name, this.telegram});
 }

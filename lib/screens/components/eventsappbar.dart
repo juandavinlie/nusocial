@@ -37,7 +37,7 @@ class _EventsAppBarState extends State<EventsAppBar> {
             padding: const EdgeInsets.only(left: kDefaultPadding),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child: Subtitle(text: 'Requests')),
+                child: Subtitle(text: 'Events')),
           ),
           ],
         ),

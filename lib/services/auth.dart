@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nusocial/models/user.dart';
 import 'package:nusocial/services/database.dart';
 
@@ -8,7 +9,7 @@ class AuthService {
 
   // create user object based on FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(user.uid, null, null, null) : null;
+    return user != null ? User(user.uid, null, null, null, "") : null;
   }
 
   Stream<User> get user {
@@ -28,18 +29,19 @@ class AuthService {
   }
 
   // register with email & password
-  Future registerWithEmailAndPassword(String name, int year, String major, String password) async {
+  Future registerWithEmailAndPassword(String name, int year, String major, String password, String telegram) async {
     try {
+      print("start");
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: name + "@nusocial.com", password: password);
-      print(name + "@nusocial.com");
+      print("end");
       FirebaseUser user = result.user;
       if (user != null) {
-        User newUser = User(user.uid, name, year, major);
+        User newUser = User(user.uid, name, year, major, telegram);
         //currentUser = thisUser;
         await DatabaseService(uid: user.uid).updateUser(newUser);
       }
       return _userFromFirebaseUser(user);
-    } catch(e) {
+    } on PlatformException catch(e) {
       print(e.toString());
       return null;
     }

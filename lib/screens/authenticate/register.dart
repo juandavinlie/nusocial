@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:nusocial/constants.dart';
 import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/services/auth.dart';
 
@@ -20,25 +21,26 @@ class _RegisterState extends State<Register> {
   String password = '';
   String error = '';
   String major = '';
+  String telegram = '';
   int year = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AppBarWithoutSearch(
-          autoImplyLeading: false,
-          text1: 'NUS',
-          text2: 'ocial',
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(kToolbarHeight),
+      //   child: AppBarWithoutSearch(
+      //     autoImplyLeading: false,
+      //     text1: 'NUS',
+      //     text2: 'ocial',
+      //   ),
+      // ),
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
-            flex: 10,
+            flex: 8,
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -53,11 +55,42 @@ class _RegisterState extends State<Register> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text('Register to NUSocial',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
+                          // Text(
+                          //   'Register to NUSocial',
+                          //   style: TextStyle(
+                          //     fontSize: 20,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
+                          RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                  text: 'Register to ',
+                                  style: TextStyle(
+                                      color: Colors.grey[900],
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                      letterSpacing: 1)),
+                              TextSpan(
+                                text: 'NUS',
+                                style: TextStyle(
+                                  color: Colors.orange[400],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'ocial',
+                                style: TextStyle(
+                                  color: Colors.grey[900],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ]),
+                          ),
                           SizedBox(height: 20.0),
                           TextFormField(
                             decoration: InputDecoration(
@@ -164,17 +197,46 @@ class _RegisterState extends State<Register> {
                               major = val;
                             },
                           ),
+                          SizedBox(height: 20.0),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              hintText: "Telegram Handle",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            validator: (val) => val.isEmpty
+                                ? "Enter your telegram handle"
+                                : null,
+                            onChanged: (val) {
+                              telegram = val;
+                            },
+                          ),
                           SizedBox(height: 20),
                           ElevatedButton(
-                            child: Text("Register"),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                  side: BorderSide(color: Colors.transparent),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              "Register",
+                            ),
                             onPressed: () async {
                               if (_formKey.currentState.validate()) {
                                 dynamic result =
                                     await _auth.registerWithEmailAndPassword(
-                                        name, year, major, password);
+                                        name, year, major, password, telegram);
                                 if (result == null) {
                                   setState(() {
-                                    error = "Username is alrady taken";
+                                    error = "Username is already taken";
                                   });
                                 }
                               } else {
@@ -202,7 +264,7 @@ class _RegisterState extends State<Register> {
             endIndent: 20,
           ),
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(

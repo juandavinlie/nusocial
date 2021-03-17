@@ -3,6 +3,7 @@ import 'package:nusocial/models/localuser.dart';
 import 'package:nusocial/models/user.dart';
 import 'package:nusocial/screens/components/appbar_without_search.dart';
 import 'package:nusocial/screens/components/custom_drawer.dart';
+import 'package:nusocial/services/auth.dart';
 import 'package:nusocial/services/database.dart';
 import 'package:provider/provider.dart';
 
@@ -16,78 +17,76 @@ class MessagesScreen extends StatefulWidget {
 class _MessagesScreenState extends State<MessagesScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        appBar: PreferredSize(
-          child: AppBarWithoutSearch(
-            autoImplyLeading: false,
-            text1: 'NUS',
-            text2: 'ocial',
-          ),
-          preferredSize: Size.fromHeight(kToolbarHeight),
+    return Scaffold(
+      appBar: PreferredSize(
+        child: AppBarWithoutSearch(
+          autoImplyLeading: true,
+          text1: 'NUS',
+          text2: 'ocial',
         ),
-        endDrawer: CustomDrawer(),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 5),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: kDefaultPadding, right: kDefaultPadding),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/anon.jpg'),
-                          radius: 30,
+        preferredSize: Size.fromHeight(kToolbarHeight),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 5, bottom: 5),
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: kDefaultPadding, right: kDefaultPadding),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(10, 10, 20, 10),
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/anon.jpg'),
+                        radius: 30,
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        'Louis Davin Lie',
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
                       ),
-                      Container(
-                        child: Text(
-                          'Louis Davin Lie',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 5, bottom: 5),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: kDefaultPadding, right: kDefaultPadding),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage('assets/anon.jpg'),
-                          radius: 30,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 5, bottom: 5),
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: kDefaultPadding, right: kDefaultPadding),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(10, 10, 20, 10),
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/anon.jpg'),
+                        radius: 30,
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        'Juan Davin Lie',
+                        style: TextStyle(
+                          fontSize: 20,
                         ),
                       ),
-                      Container(
-                        child: Text(
-                          'Juan Davin Lie',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-  
+      ),
     );
   }
 }
