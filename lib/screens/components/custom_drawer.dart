@@ -49,7 +49,13 @@ class CustomDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
-              onTap: () {},
+              onTap: () {
+                if (ModalRoute.of(context).settings.name == '/settings') {
+                  Navigator.pop(context);
+                } else {
+                  Navigator.pushNamed(context, '/settings');
+                }
+              },
             ),
             ListTile(
               leading: Icon(Icons.logout),
